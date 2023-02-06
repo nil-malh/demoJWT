@@ -9,10 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+
 import java.util.function.Function;
 
 @Service
@@ -22,7 +23,6 @@ public class JWTService {
 
     public String extractUsernameFromToken(String jwtToken)
     {
-
         return extractClaim(jwtToken, Claims::getSubject);
     }
 
@@ -44,7 +44,7 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 3600))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000*60)*60))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -61,7 +61,15 @@ public class JWTService {
     public boolean isTokenValid(String token, UserDetails userDetails)
     {
         final String username = extractUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenEx);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    private Date getExpirationDate(String jwtToken)
+    {
+        return extractClaim(jwtToken,Claims::getExpiration);
+    }
+    private boolean isTokenExpired(String token) {
+        return getExpirationDate(token).before(new Date());
     }
 
     private Key getSignInKey() {
