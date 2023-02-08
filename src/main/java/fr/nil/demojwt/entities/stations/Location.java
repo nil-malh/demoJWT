@@ -1,27 +1,29 @@
-package fr.nil.demojwt.entities.user.stations;
+package fr.nil.demojwt.entities.stations;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "_locations")
 public class Location {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Integer id;
+    @NonNull
     private String cityName;
+    @NonNull
     private String zipCode;
+    @NonNull
     private Float latitude;
+    @NonNull
     private Float longitude;
+    @NonNull
     private String address;
 
 

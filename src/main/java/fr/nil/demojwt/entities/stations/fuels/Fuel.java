@@ -1,10 +1,7 @@
-package fr.nil.demojwt.entities.user.stations.fuels;
+package fr.nil.demojwt.entities.stations.fuels;
 
-import fr.nil.demojwt.entities.user.stations.Station;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor

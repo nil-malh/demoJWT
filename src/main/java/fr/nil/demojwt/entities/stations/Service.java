@@ -1,25 +1,26 @@
-package fr.nil.demojwt.entities.user.stations;
+package fr.nil.demojwt.entities.stations;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "_services")
 
 public class Service {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue
     private Integer id;
+    @NonNull
     private String serviceName;
+    @NonNull
     private String serviceDescription;
 
 
